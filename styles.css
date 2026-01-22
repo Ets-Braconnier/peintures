@@ -252,12 +252,19 @@ header.top {
 
 
 /* IMAGE DANS LE CADRE */
+.catBtn .catIcon {
+  overflow: hidden;
+  border-radius: 50%;
+}
+
 .catBtn .catIcon img {
-  max-width: 80%;
-  max-height: 80%;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
   display: block;
 }
+
 
 .catBtn span {
   font-size: 11px;
@@ -311,4 +318,37 @@ header.top {
   .catSelect {
     display: block;
   }
+}
+
+/* ======================
+   BANDEAU NUANCIER
+====================== */
+
+.top-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.nuancier-mini {
+  margin-left: auto;
+  /* pousse à droite */
+  text-align: center;
+  max-width: 220px;
+}
+
+.nuancier-mini img {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.nuancier-mini p {
+  font-size: 11px;
+  color: #666;
+  margin-top: 4px;
+  line-height: 1.2;
 }

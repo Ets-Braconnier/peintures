@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="fr">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,15 +10,23 @@
 
 <body>
   <header class="top">
-    <!-- Mets ton logo peinture ici (ou garde un placeholder) -->
-    <img src="logo-site.png" alt="Peinture" class="logo">
 
-    <!-- Desktop/tablette -->
-    <div id="catButtons" class="catButtons"></div>
+    <div class="top-row">
+      <img src="logo-site.png" alt="Peinture" class="logo">
 
-    <!-- Mobile -->
+      <div id="catButtons" class="catButtons"></div>
+
+      <!-- ✅ NUANCIER -->
+      <div class="nuancier-mini">
+        <img src="images/nuancier.png" alt="Nuancier couleurs">
+        <p>Toutes nos couleurs sont teintées en magasin</p>
+      </div>
+    </div>
+
     <select id="catSelect" class="catSelect" aria-label="Choisir une catégorie"></select>
+
   </header>
+
 
   <div id="app"></div>
 
@@ -51,8 +60,15 @@
         "Lak-rapide-exter.jpg",
         "Lak-reg-sat.jpg",
         "Levis-floor-regul.jpg"
-      ]
+      ],
+
+      // ✅ Marques ajoutées (listes vides pour l’instant)
+      "diessner": [],
+      "sikkens": [],
+      "v33": [],
+      "basin": []
     };
+
 
     /** Libellés propres (optionnel)
      *  Si tu veux afficher un nom plus “marketing” que le nom du fichier.
@@ -78,25 +94,30 @@
       "levis/Levis-floor-regul.jpg": "Levis floor regul"
     };
 
-    /** Tailles “fallback” (si l’Excel n’a pas encore de tailles) */
     const CAT_SIZES = {
-      "levis": ["1L", "2.5L", "5L", "10L"]
+      "levis": ["1L", "2.5L", "5L", "10L"],
+      "diessner": ["1L", "2.5L", "5L", "10L"],
+      "sikkens": ["1L", "2.5L", "5L", "10L"],
+      "v33": ["0.5L", "1L", "2.5L", "5L"],
+      "basin": ["1L", "2.5L", "5L", "10L"]
     };
 
-    /** Boutons catégories (ordre + libellés) */
     const CATEGORY_UI = [
-      { id: "levis", label: "Levis" }
-      // Tu ajouteras plus tard :
-      // { id: "primaires", label: "Primaires" },
-      // { id: "murs", label: "Murs" },
-      // { id: "bois", label: "Bois" },
-      // etc.
+      { id: "levis", label: "Levis" },
+      { id: "diessner", label: "Diessner" },
+      { id: "sikkens", label: "Sikkens" },
+      { id: "v33", label: "V33" },
+      { id: "basin", label: "Basin" }
     ];
 
-    /** Icônes (optionnel). Mets des images dans vignettes-boutons/ si tu veux. */
     const CAT_ICONS = {
-      "levis": "vignettes-boutons/levis.png"
+      "levis": "vignettes-boutons/levis.jpg",
+      "diessner": "vignettes-boutons/diessner.jpg",
+      "sikkens": "vignettes-boutons/sikkens.jpg",
+      "v33": "vignettes-boutons/v33.jpg",
+      "basin": "vignettes-boutons/basin.jpg"
     };
+
 
     /* =========================
        2) PRIX / STOCK (inchangé)
@@ -131,7 +152,7 @@
       } catch { return fallback; }
     }
     function setStoredSize(key, val) {
-      try { localStorage.setItem("size:" + key, val); } catch {}
+      try { localStorage.setItem("size:" + key, val); } catch { }
     }
 
     function pickInitialSize(pathKey, options) {
@@ -349,13 +370,13 @@
             <div class="price">
               <div class="price-label">Tvac</div>
               ${price !== undefined
-                ? `<div class="price-amount">
+            ? `<div class="price-amount">
                      <span class="int">${formatPrice(price).split(".")[0]}</span>
                      <span class="dec">${formatPrice(price).split(".")[1] || "00"}</span>
                      <span class="eur">€</span>
                    </div>`
-                : `<div class="price-amount muted">—</div>`
-              }
+            : `<div class="price-amount muted">—</div>`
+          }
             </div>
           </figure>
         `;
@@ -412,4 +433,5 @@
     })();
   </script>
 </body>
+
 </html>
