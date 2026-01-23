@@ -108,13 +108,14 @@
       "diessner/perfect-fine": "Perfect fine"
     };
 
-    const PRODUCT_LINKS = {
-      "diessner/dry_protection.png": "https://monsite.com/dry-protection",
-      "diessner/premium.png": "https://www.braconnier.be/PDF/Fiches/Diessner_Premium",
-      "diessner/primaire.png": "https://www.braconnier.be/PDF/Fiches/Diessner_primaire.pdf",
-      "diessner/ultramatt.png": "https://www.braconnier.be/PDF/Fiches/Diessner_Ultramatt",
-      "diessner/perfect-fine.png": "https://monsite.com/perfect-fine"
+    const PRODUCT_PDFS = {
+      "diessner/dry_protection.png": "pdf/Diessner_DRY_Protection.pdf",
+      "diessner/perfect-fine.png": "pdf/Diessner_Perfect_Fine.pdf",
+      "diessner/premium.png": "pdf/Diessner_Premium.pdf",
+      "diessner/ultramatt.png": "pdf/Diessner_Ultramat.pdf",
+      "diessner/primaire.png": "pdf/Diessner_primaire.pdf"
     };
+
 
 
     const CAT_SIZES = {
@@ -375,7 +376,13 @@
 
         html += `
           <figure>
-            <figcaption>${label}</figcaption>
+            <figcaption>
+             ${PRODUCT_PDFS[pathKey]
+            ? `<a href="${PRODUCT_PDFS[pathKey]}" target="_blank" class="titleLink">${label}</a>`
+            : label
+          }
+</figcaption>
+
 
             <a class="thumb" href="${src}" target="_blank" rel="noopener">
               <img src="${src}" alt="${label}"
