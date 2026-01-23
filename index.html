@@ -109,14 +109,12 @@
     };
 
     const PRODUCT_PDFS = {
-      "diessner/dry_protection.png": "pdf/Diessner_DRY_Protection.pdf",
-      "diessner/perfect-fine.png": "pdf/Diessner_Perfect_Fine.pdf",
-      "diessner/premium.png": "pdf/Diessner_Premium.pdf",
-      "diessner/ultramatt.png": "pdf/Diessner_Ultramat.pdf",
-      "diessner/primaire.png": "pdf/Diessner_primaire.pdf"
+      "diessner/dry_protection.png": "pdf/diessner-dry-protection.pdf",
+      "diessner/perfect-fine.png": "pdf/diessner-perfect-fine.pdf",
+      "diessner/premium.png": "pdf/diessner-premium.pdf",
+      "diessner/primaire.png": "pdf/diessner-primaire.pdf",
+      "diessner/ultramatt.png": "pdf/diessner-ultramatt.pdf"
     };
-
-
 
     const CAT_SIZES = {
       "levis": ["1L", "2.5L", "5L", "10L"],
@@ -378,10 +376,11 @@
           <figure>
             <figcaption>
              ${PRODUCT_PDFS[pathKey]
-            ? `<a href="${PRODUCT_PDFS[pathKey]}" target="_blank" class="titleLink">${label}</a>`
+            ? `<a href="${PRODUCT_PDFS[pathKey]}" target="_blank" rel="noopener" class="titleLink">${label}</a>`
             : label
           }
 </figcaption>
+
 
 
             <a class="thumb" href="${src}" target="_blank" rel="noopener">
