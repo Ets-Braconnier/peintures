@@ -418,9 +418,16 @@ header.top {
 /* Cecil : logo rectangulaire => on évite le crop */
 .catBtn[data-cat="cecil"] .catIcon img {
   object-fit: contain;
-  padding: 10px;           /* ajuste 8–14px selon rendu */
-  background: #fff;        /* optionnel : fond blanc propre */
+  padding: 10px;
+  /* ajuste 8–14px selon rendu */
+  background: #fff;
+  /* optionnel : fond blanc propre */
   border-radius: 50%;
 }
 
-
+.catBtn[data-cat="motip"] .catIcon img {
+  object-fit: contain;
+  padding: 1px;
+  background: #fff;
+  border-radius: 50%;
+}

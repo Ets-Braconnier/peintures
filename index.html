@@ -19,7 +19,7 @@
     <div class="nav-row">
       <div id="catButtons" class="catButtons"></div>
 
-      <div class="nuancier-mini">
+      <div class="nuancier-mini" id="nuancierMini">
         <img src="nuancier.png" alt="Nuancier couleurs">
         <p>Toutes nos couleurs sont teintées en magasin</p>
       </div>
@@ -99,6 +99,40 @@
 
       "cecil": [
         "tx203.png"
+      ],
+
+      "motip": [
+        "carat-argent.png",
+        "carat-chrome-argent.png",
+        "carat-chrome-cuivre.png",
+        "carat-chrome-or.png",
+        "carat-color.png",
+        "carat-effet-paillettes-or.png",
+        "carat-fixation.png",
+        "carat-glue.png",
+        "carat-polystyrene.png",
+        "carat-primer-blanc.png",
+        "carat-primer.png",
+        "crafts-spray.png",
+        "effect-bronze-antique.png",
+        "effect-bronze-cuivre.png",
+        "effect-bronze-gold.png",
+        "effect-chrome-cuivre.png",
+        "effect-chrome-gold.png",
+        "effect-chrome.png",
+        "effect-clear-varnish-vernis.png",
+        "effect-email-porcelaine.png",
+        "effect-fluor.png",
+        "effect-frigo-blanc.png",
+        "effect-graffiti-ex.png",
+        "effect-metallic.png",
+        "effect-radiateur.png",
+        "effect-zinc.png",
+        "karat-effet-paillettes.png",
+        "motip-effect-ht.jpg",
+        "spray-acryl.png",
+        "spray-prof.png",
+        "carat-embout.png",
       ],
 
 
@@ -212,7 +246,9 @@
       "sikkens": ["1L", "2.5L", "5L"],
       "v33": ["0.5L", "1L", "2.5L", "5L"],
       "basin": ["1L", "2.5L", "5L"],
-      "cecil": ["1L","5L", "25L"],
+      "cecil": ["1L", "5L", "25L"],
+      "motip": ["400ml"],
+
     };
 
     const CATEGORY_UI = [
@@ -222,6 +258,8 @@
       { id: "v33", label: "V33" },
       { id: "basin", label: "Basin" },
       { id: "cecil", label: "Cecil" },
+      { id: "motip", label: "Motip Spray" },
+
     ];
 
     const CAT_ICONS = {
@@ -230,7 +268,9 @@
       "sikkens": "vignettes-boutons/sikkens.png",
       "v33": "vignettes-boutons/v33.png",
       "basin": "vignettes-boutons/basin.png",
-      "cecil": "vignettes-boutons/cecil.png"
+      "cecil": "vignettes-boutons/cecil.png",
+      "motip": "vignettes-boutons/motip.png",
+
 
     };
 
@@ -244,6 +284,13 @@
     const app = document.getElementById("app");
     const catButtons = document.getElementById("catButtons");
     const catSelect = document.getElementById("catSelect");
+    const nuancierMini = document.getElementById("nuancierMini");
+
+    function syncNuancier() {
+      if (!nuancierMini) return;
+      nuancierMini.style.display = (activeCat === "levis" || activeCat === "diessner") ? "" : "none";
+    }
+
 
     function normalizeSize(s) { return String(s || "").trim(); }
     function getKey(path, taille) { return `${path}|${normalizeSize(taille)}`; }
@@ -416,14 +463,19 @@
         syncCategoryUI();
         render();
       });
+      syncNuancier();
     }
 
     function syncCategoryUI() {
       if (catSelect) catSelect.value = activeCat;
+
       document.querySelectorAll("#catButtons .catBtn").forEach(b => {
         b.classList.toggle("active", b.dataset.cat === activeCat);
       });
+
+      syncNuancier(); // 👈 AJOUTE CETTE LIGNE
     }
+
 
     function render() {
       const cat = activeCat;
