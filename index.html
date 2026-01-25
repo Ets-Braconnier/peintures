@@ -19,7 +19,7 @@
     <div class="nav-row">
       <div id="catButtons" class="catButtons"></div>
 
-      <div class="nuancier-mini" id="nuancierMini">
+      <div class="nuancier-mini">
         <img src="nuancier.png" alt="Nuancier couleurs">
         <p>Toutes nos couleurs sont teintées en magasin</p>
       </div>
@@ -132,7 +132,7 @@
         "motip-effect-ht.jpg",
         "spray-acryl.png",
         "spray-prof.png",
-        "carat-embout.png",
+        "carat-embout.png"
       ],
 
 
@@ -160,7 +160,7 @@
       "diessner/premium.png": "Premium",
       "diessner/primaire.png": "Primaire",
       "diessner/ultramatt.png": "Ultramatt",
-      "diessner/perfect-fine": "Perfect fine",
+      "diessner/perfect-fine.png": "Perfect fine",
       "sikkens/sikkens-filter-7-plus.jpg": "Filter 7 Plus",
       "sikkens/sikkens-filter-7.png": "Filter 7",
       "sikkens/sikkens-hsl-plus.png": "HSL Plus",
@@ -284,13 +284,6 @@
     const app = document.getElementById("app");
     const catButtons = document.getElementById("catButtons");
     const catSelect = document.getElementById("catSelect");
-    const nuancierMini = document.getElementById("nuancierMini");
-
-    function syncNuancier() {
-      if (!nuancierMini) return;
-      nuancierMini.style.display = (activeCat === "levis" || activeCat === "diessner") ? "" : "none";
-    }
-
 
     function normalizeSize(s) { return String(s || "").trim(); }
     function getKey(path, taille) { return `${path}|${normalizeSize(taille)}`; }
@@ -301,8 +294,16 @@
     }
 
     function getSizeOptions(cat, file) {
+      const pathKey = `${cat}/${file}`;
+
+      // 1) Priorité aux tailles trouvées dans les Excel
+      const excelSizes = SIZES_BY_PATH[pathKey];
+      if (Array.isArray(excelSizes) && excelSizes.length) return excelSizes;
+
+      // 2) Sinon fallback sur les tailles “en dur” du HTML
       return CAT_SIZES[cat] || [""];
     }
+
 
     function getStoredSize(key, fallback) {
       try {
@@ -463,19 +464,14 @@
         syncCategoryUI();
         render();
       });
-      syncNuancier();
     }
 
     function syncCategoryUI() {
       if (catSelect) catSelect.value = activeCat;
-
       document.querySelectorAll("#catButtons .catBtn").forEach(b => {
         b.classList.toggle("active", b.dataset.cat === activeCat);
       });
-
-      syncNuancier(); // 👈 AJOUTE CETTE LIGNE
     }
-
 
     function render() {
       const cat = activeCat;
@@ -600,11 +596,16 @@
     }
 
     (async function init() {
-      await loadPricesFromFolder(); // OK même si pas encore de manifest
-      buildCatButtons();
-      buildCatSelect();
-      syncCategoryUI();
-      render();
+      try {
+        await loadPricesFromFolder(); // OK même si pas encore de manifest
+        buildCatButtons();
+        buildCatSelect();
+        syncCategoryUI();
+        render();
+      } catch (e) {
+        console.error("Init error:", e);
+        app.innerHTML = `<p class="missing">❌ Erreur JavaScript: ${String(e && e.message ? e.message : e)}</p>`;
+      }
     })();
   </script>
 </body>
