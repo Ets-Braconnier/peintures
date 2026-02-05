@@ -646,12 +646,14 @@
       const cat = activeCat;
       if (!cat || !IMAGES[cat]) {
         app.innerHTML = `<p class="muted">Aucune catégorie à afficher.</p>`;
+        sendHeightSoon();
         return;
       }
 
       const files = IMAGES[cat] || [];
       if (!files.length) {
         app.innerHTML = `<p class="muted">Aucun produit à afficher.</p>`;
+        sendHeightSoon();
         return;
       }
 
@@ -728,6 +730,8 @@
       html += `</div>`;
       app.innerHTML = html;
 
+      sendHeightSoon(); // 
+
       document.querySelectorAll('select[data-path]').forEach(sel => {
         sel.addEventListener("change", () => {
           const pathKey = sel.dataset.path;
@@ -780,6 +784,31 @@
       }
     })();
   </script>
+
+  <script>
+    function sendHeight() {
+      const h = Math.max(
+        document.body ? document.body.scrollHeight : 0,
+        document.documentElement ? document.documentElement.scrollHeight : 0
+      );
+
+      if (window.parent !== window) {
+        window.parent.postMessage({ type: "resize", height: h }, "*");
+      }
+    }
+
+    function sendHeightSoon() {
+      requestAnimationFrame(() => {
+        sendHeight();
+        setTimeout(sendHeight, 150);
+        setTimeout(sendHeight, 600);
+      });
+    }
+
+    window.addEventListener("load", sendHeightSoon);
+    window.addEventListener("resize", sendHeightSoon);
+  </script>
+
 </body>
 
 </html>
