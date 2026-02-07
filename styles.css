@@ -27,7 +27,7 @@ body {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 10px;
   align-items: stretch;
 }
@@ -306,19 +306,10 @@ header.top {
    RESPONSIVE
 ====================== */
 
-@media (max-width: 700px),
-(pointer: coarse) and (hover: none) {
-  .logo {
-    height: 70px;
-  }
-
-  .catButtons {
-    display: none;
-  }
-
-  .catSelect {
-    display: block;
-  }
+@media (max-width: 700px), (pointer: coarse) {
+  .logo { height: 70px; }
+  .catButtons { display: none; }
+  .catSelect { display: block; }
 }
 
 /* ======================
@@ -536,4 +527,21 @@ header.top {
   border-radius: 6px;
   margin-left: 6px;
   letter-spacing: .5px;
+}
+
+/* ===== Fix mobile en iframe (viewport parent parfois faux) ===== */
+@media (max-width: 700px), (pointer: coarse) {
+
+  body {
+    margin: 12px;
+  }
+
+  /* Optionnel : images un peu plus grandes */
+  .thumb {
+    height: 120px;
+  }
+
+  .price-amount .int {
+    font-size: 32px;
+  }
 }
