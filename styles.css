@@ -306,7 +306,8 @@ header.top {
    RESPONSIVE
 ====================== */
 
-@media (max-width: 700px) {
+@media (max-width: 700px),
+(pointer: coarse) and (hover: none) {
   .logo {
     height: 70px;
   }
@@ -520,13 +521,13 @@ header.top {
 }
 
 /* Hammerite : logo complet visible */
-.catBtn[data-cat="hammerite"] .catIcon img{
+.catBtn[data-cat="hammerite"] .catIcon img {
   object-fit: contain;
   padding: 1px;
   background: #fff;
 }
 
-.pdfTag{
+.pdfTag {
   font-size: 9px;
   font-weight: 700;
   background: #e9ecef;
