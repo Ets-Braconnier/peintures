@@ -28,13 +28,8 @@
 
 
       <select id="catSelect" class="catSelect" aria-label="Choisir une catégorie"></select>
-    </div> 
+    </div>
   </header>
-
-
-
-  </header>
-
 
   <div id="app"></div>
 
@@ -789,28 +784,35 @@
   </script>
 
   <script>
-    function sendHeight() {
-      const h = Math.max(
-        document.body ? document.body.scrollHeight : 0,
-        document.documentElement ? document.documentElement.scrollHeight : 0
+  function sendHeight() {
+    const h = Math.max(
+      document.documentElement.scrollHeight,
+      document.body.scrollHeight
+    );
+
+    if (window.parent !== window) {
+      window.parent.postMessage(
+        { type: "resize", height: h },
+        "https://braconnier.be"
       );
-
-      if (window.parent !== window) {
-        window.parent.postMessage({ type: "resize", height: h }, "*");
-      }
     }
+  }
 
-    function sendHeightSoon() {
-      requestAnimationFrame(() => {
-        sendHeight();
-        setTimeout(sendHeight, 150);
-        setTimeout(sendHeight, 600);
-      });
-    }
+  function sendHeightSoon() {
+    requestAnimationFrame(() => {
+      sendHeight();
+      setTimeout(sendHeight, 200);
+      setTimeout(sendHeight, 800);
+    });
+  }
 
-    window.addEventListener("load", sendHeightSoon);
-    window.addEventListener("resize", sendHeightSoon);
-  </script>
+  window.addEventListener("load", sendHeightSoon);
+  window.addEventListener("resize", sendHeightSoon);
+
+  // Recalcule si le contenu change (images, grille, filtres…)
+  new ResizeObserver(sendHeightSoon).observe(document.body);
+</script>
+
 
 </body>
 
