@@ -31,14 +31,33 @@
     </div> 
   </header>
 
-
-
-  </header>
-
-
   <div id="app"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+    <script>
+    function sendHeight() {
+      const h = Math.max(
+        document.body ? document.body.scrollHeight : 0,
+        document.documentElement ? document.documentElement.scrollHeight : 0
+      );
+
+      if (window.parent !== window) {
+        window.parent.postMessage({ type: "resize", height: h }, "*");
+      }
+    }
+
+    function sendHeightSoon() {
+      requestAnimationFrame(() => {
+        sendHeight();
+        setTimeout(sendHeight, 150);
+        setTimeout(sendHeight, 600);
+      });
+    }
+
+    window.addEventListener("load", sendHeightSoon);
+    window.addEventListener("resize", sendHeightSoon);
+  </script>
 
   <script>
     const IMAGES = {
@@ -786,30 +805,6 @@
         app.innerHTML = `<p class="missing">❌ Erreur JavaScript: ${String(e && e.message ? e.message : e)}</p>`;
       }
     })();
-  </script>
-
-  <script>
-    function sendHeight() {
-      const h = Math.max(
-        document.body ? document.body.scrollHeight : 0,
-        document.documentElement ? document.documentElement.scrollHeight : 0
-      );
-
-      if (window.parent !== window) {
-        window.parent.postMessage({ type: "resize", height: h }, "*");
-      }
-    }
-
-    function sendHeightSoon() {
-      requestAnimationFrame(() => {
-        sendHeight();
-        setTimeout(sendHeight, 150);
-        setTimeout(sendHeight, 600);
-      });
-    }
-
-    window.addEventListener("load", sendHeightSoon);
-    window.addEventListener("resize", sendHeightSoon);
   </script>
 
 </body>
